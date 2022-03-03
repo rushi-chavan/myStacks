@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "my-stacks-mgmt": {
+      "hosting": {
+        "myStacks": [
+          "mystacks-rushi"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "my-stacks-mgmt"
+  }
+}
