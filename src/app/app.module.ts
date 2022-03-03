@@ -10,12 +10,15 @@ import { environment } from '../environments/environment';
 //importing custom made components
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 //importing material components
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { MatMenuModule } from '@angular/material/menu';
     //declaring custom made components
     NavbarComponent,
     DashboardComponent,
+    InventoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +39,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    MatTableModule,
+    MatCardModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
