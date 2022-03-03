@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 
 //importing custom made components
 import { NavbarComponent } from './navbar/navbar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 //importing material components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,7 +18,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+
+    //declaring custom made components
+    NavbarComponent,
+    DashboardComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
