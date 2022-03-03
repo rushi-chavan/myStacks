@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <span>My Stacks</span>
 
-  <button mat-button>Dashboard</button>
-  <button mat-button>Inventory</button>
+  <button mat-button routerLink="dashboard">Dashboard</button>
+  <button mat-button routerLink="inventory">Inventory</button>
 
   <button mat-button [matMenuTriggerFor]="BillsMenu">Bills</button>
   <mat-menu #BillsMenu="matMenu">
