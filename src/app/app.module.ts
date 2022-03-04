@@ -24,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { BillsComponent } from './bills/bills.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     NavbarComponent,
     DashboardComponent,
     InventoryComponent,
+    BillsComponent,
   ],
   imports: [
     BrowserModule,
