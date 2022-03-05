@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Firestore, collectionData, collection, updateDoc, addDoc, doc, DocumentReference, deleteDoc } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { Product } from './Product';
 
@@ -9,6 +10,7 @@ import { Product } from './Product';
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class InventoryComponent implements OnInit {
   inventoryID: string;
@@ -16,7 +18,7 @@ export class InventoryComponent implements OnInit {
   products: Observable<Product[]>;
   productColumns: String[];
 
-  constructor(private store: Firestore, public dialog: MatDialog) {
+  constructor(private store: Firestore, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.inventoryID = 'IIg2g4EKZKVszwPJrGx1';
     this.productsColRef = collection(store, `inventories/${this.inventoryID}/products`);
 
@@ -30,23 +32,31 @@ export class InventoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) addDoc(this.productsColRef, result);
+      if (result)
+        addDoc(this.productsColRef, result).then(() => {
+          this._snackBar.open('Product added');
+        });
     });
   }
 
-  updateProduct(product: Product, id: number): void {
+  updateProduct(product: Product): void {
     const dialogRef = this.dialog.open(ProductDialogComponent, {
       width: '50vw',
       data: { ...product },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) updateDoc(this.docRef(result), result);
+      if (result)
+        updateDoc(this.docRef(result), result).then(() => {
+          this._snackBar.open('Product updated');
+        });
     });
   }
 
   deleteProduct(product: Product): void {
-    deleteDoc(this.docRef(product));
+    deleteDoc(this.docRef(product)).then(() => {
+      this._snackBar.open('Product deleted');
+    });
   }
 
   docRef(product: Product): DocumentReference<Product> {

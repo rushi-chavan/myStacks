@@ -10,3 +10,7 @@
   height: auto;
   padding: 30px 30px;
 }
+
+.center {
+  justify-content: center;
+}

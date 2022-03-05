@@ -26,11 +26,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 //importing Firebase modules
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore, enableIndexedDbPersistence } from '@angular/fire/firestore';
 
 //other imports
 import { FormsModule } from '@angular/forms';
@@ -64,6 +65,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSnackBarModule,
 
     //other imports
     FormsModule,
@@ -72,7 +74,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     //declaring Firebase modules
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+      enableIndexedDbPersistence(firestore);
+      return firestore;
+    }),
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
@@ -81,7 +87,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [],
+  providers: [{ provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000, panelClass: ['center'], verticalPosition: 'top', horizontalPosition: 'right' } }],
   bootstrap: [AppComponent],
   entryComponents: [ProductDialogComponent],
 })
