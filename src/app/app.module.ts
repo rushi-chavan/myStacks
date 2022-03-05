@@ -11,6 +11,8 @@ import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { BillsComponent } from './bills/bills.component';
+import { ProductDialogComponent } from './inventory/product-dialog/product-dialog.component';
 
 //importing material components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,12 +21,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 //importing Firebase modules
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { BillsComponent } from './bills/bills.component';
+
+//other imports
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -35,6 +45,7 @@ import { BillsComponent } from './bills/bills.component';
     DashboardComponent,
     InventoryComponent,
     BillsComponent,
+    ProductDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +59,15 @@ import { BillsComponent } from './bills/bills.component';
     MatMenuModule,
     MatTableModule,
     MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+
+    //other imports
+    FormsModule,
+    FlexLayoutModule,
 
     //declaring Firebase modules
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -63,5 +83,6 @@ import { BillsComponent } from './bills/bills.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [ProductDialogComponent],
 })
 export class AppModule {}
