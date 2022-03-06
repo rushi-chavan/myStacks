@@ -20,7 +20,7 @@ export class InventoryComponent implements OnInit {
 
   constructor(private store: Firestore, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.inventoryID = 'IIg2g4EKZKVszwPJrGx1';
-    this.productsColRef = collection(store, `inventories/${this.inventoryID}/products`);
+    this.productsColRef = collection(store, 'inventories', this.inventoryID, 'products');
 
     this.products = collectionData(this.productsColRef, { idField: 'docID' });
     this.productColumns = ['code', 'name', 'price', 'qty', 'update', 'delete'];
@@ -29,27 +29,14 @@ export class InventoryComponent implements OnInit {
   addProduct(): void {
     const dialogRef = this.dialog.open(ProductDialogComponent, {
       width: '50vw',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        addDoc(this.productsColRef, result).then(() => {
-          this._snackBar.open('Product added');
-        });
+      data: { productsColRef: this.productsColRef },
     });
   }
 
   updateProduct(product: Product): void {
     const dialogRef = this.dialog.open(ProductDialogComponent, {
       width: '50vw',
-      data: { ...product },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result)
-        updateDoc(this.docRef(result), result).then(() => {
-          this._snackBar.open('Product updated');
-        });
+      data: { product: { ...product }, productsColRef: this.productsColRef },
     });
   }
 
@@ -60,7 +47,7 @@ export class InventoryComponent implements OnInit {
   }
 
   docRef(product: Product): DocumentReference<Product> {
-    return doc(this.store, `inventories/${this.inventoryID}/products/${product.docID}`);
+    return doc(this.store, 'inventories', this.inventoryID, 'products', product.docID ? product.docID : '');
   }
 
   ngOnInit(): void {}

@@ -1,9 +1,9 @@
 <!-- ADD PRODUCT -->
 <div>
-  <ng-template [ngIf]="product" [ngIfElse]="addHeader">
+  <ng-template [ngIf]="data.product" [ngIfElse]="addHeader">
     <h1 mat-dialog-title>Update Product</h1>
   </ng-template>
-  <ng-template #addHeader mat-dialog-title>
+  <ng-template #addHeader>
     <h1 mat-dialog-title>Add Product</h1>
   </ng-template>
 
@@ -34,12 +34,12 @@
   </div>
 
   <div mat-dialog-actions>
-    <ng-template [ngIf]="product" [ngIfElse]="addButton">
-      <button mat-raised-button [mat-dialog-close]="product">Update</button>
+    <ng-template [ngIf]="data.product" [ngIfElse]="addButton">
+      <button mat-raised-button (click)="update()">Update</button>
     </ng-template>
     <ng-template #addButton>
-      <button mat-raised-button [mat-dialog-close]="newProduct">Add</button>
+      <button mat-raised-button (click)="add()">Add</button>
     </ng-template>
-    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
   </div>
 </div>
