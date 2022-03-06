@@ -4,10 +4,8 @@
   <button mat-button routerLink="dashboard">Dashboard</button>
   <button mat-button routerLink="inventory">Inventory</button>
 
-  <button mat-button [matMenuTriggerFor]="BillsMenu">Bills</button>
-  <mat-menu #BillsMenu="matMenu">
-    <button mat-menu-item>New Bill</button>
-    <button mat-menu-item>View Bills</button>
-  </mat-menu>
+  <button mat-button routerLink="bills">Bills</button>
+  
+  
   <span class="example-spacer"></span>
 </mat-toolbar>
