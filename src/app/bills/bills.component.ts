@@ -4,6 +4,7 @@ import { Firestore, collectionData, collection, updateDoc, addDoc, doc, Document
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductDialogComponent } from '../inventory/product-dialog/product-dialog.component';
+import { Bills } from './Bills';
 
 
 @Component({
@@ -12,10 +13,20 @@ import { ProductDialogComponent } from '../inventory/product-dialog/product-dial
   styleUrls: ['./bills.component.css']
 })
 export class BillsComponent implements OnInit {
+  inventoryID: string;
+  bills: Observable<Bills[]>;
+  billsColumn: String[];
   productsColRef: any;
-  dialog: any;
+  
+  
+  constructor(private store: Firestore, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+    this.inventoryID = 'IIg2g4EKZKVszwPJrGx1';
+    this.productsColRef = collection(store, 'inventories', this.inventoryID, 'bills');
 
-  constructor() { }
+    this.bills = collectionData(this.productsColRef, { idField: 'docID' });
+    this.billsColumn = ['invoiceNumber', 'billingpartyName', 'billAmount', 'deliveryDate', 'printBill', 'deleteBill'];
+  }
+
 
   newBill(): void {
     const dialogRef = this.dialog.open(ProductDialogComponent, {
