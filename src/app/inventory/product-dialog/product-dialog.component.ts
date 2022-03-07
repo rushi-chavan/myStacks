@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { addDoc, doc, DocumentReference, Firestore, updateDoc, CollectionReference } from '@angular/fire/firestore';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FirebaseCrudService } from 'src/app/services/firebase-crud.service';
 import { Product } from '../Product';
 
 @Component({
@@ -12,7 +13,7 @@ import { Product } from '../Product';
 export class ProductDialogComponent implements OnInit {
   newProduct!: Product;
   productsColRef!: any;
-  constructor(private store: Firestore, public dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar) {
+  constructor(private store: Firestore, private crud: FirebaseCrudService, public dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar) {
     if (data.product) this.newProduct = data.product;
     else this.newProduct = {};
     this.productsColRef = data.productsColRef;
@@ -21,42 +22,13 @@ export class ProductDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   add(): void {
-    addDoc(this.productsColRef, this.newProduct)
-      .then(() => {
-        this._snackBar
-          .open('Product added')
-          .afterOpened()
-          .subscribe(() => {
-            this.dialogRef.close();
-          });
-      })
-      .catch((e) => {
-        this._snackBar.open('Error: Cannot add product');
-        console.log(e.message);
-      });
+    if (this.crud.addDocument(this.productsColRef, this.newProduct)) this.dialogRef.close();
   }
-
   update(): void {
-    updateDoc(this.docRef(this.newProduct), this.newProduct)
-      .then(() => {
-        this._snackBar
-          .open('Product updated')
-          .afterOpened()
-          .subscribe(() => {
-            this.dialogRef.close();
-          });
-      })
-      .catch((e) => {
-        this._snackBar.open('Error: Cannot update product');
-        console.log(e.message);
-      });
+    if (this.crud.updateDocument(this.productsColRef, this.newProduct)) this.dialogRef.close();
   }
 
   cancel(): void {
     this.dialogRef.close();
-  }
-
-  docRef(product: Product): DocumentReference<Product> {
-    return doc(this.store, this.productsColRef.path, `${product.docID}`);
   }
 }
