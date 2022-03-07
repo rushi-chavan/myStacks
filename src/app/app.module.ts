@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { BillsComponent } from './bills/bills.component';
 import { ProductDialogComponent } from './inventory/product-dialog/product-dialog.component';
+import { BillsDialogComponent } from './bills/bills-dialog/bills-dialog.component';
 
 //importing material components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -47,6 +48,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     InventoryComponent,
     BillsComponent,
     ProductDialogComponent,
+    BillsDialogComponent,
   ],
   imports: [
     BrowserModule,

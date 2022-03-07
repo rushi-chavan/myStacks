@@ -10,18 +10,18 @@ import { Bills } from '../Bills';
   styleUrls: ['./bills-dialog.component.css'],
 })
 export class BillsDialogComponent implements OnInit {
-  newBill!: Bills;
+  newBills!: Bills;
   billsColRef!: any;
   constructor(private store: Firestore, public dialogRef: MatDialogRef<BillsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar) {
-    if (data.bill) this.newBill = data.bill;
-    else this.newBill = {};
+    if (data.bill) this.newBills = data.bill;
+    else this.newBills = {};
     this.billsColRef = data.billssColRef;
   }
 
   ngOnInit(): void {}
 
   add(): void {
-    addDoc(this.billsColRef, this.newBill)
+    addDoc(this.billsColRef, this.newBills)
       .then(() => {
         this._snackBar
           .open('Bill added')

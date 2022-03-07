@@ -1,10 +1,7 @@
 <!-- ADD Bill -->
 <div>
-    <ng-template [ngIf]="data.product" [ngIfElse]="addHeader">
-      <h1 mat-dialog-title>Update Product</h1>
-    </ng-template>
     <ng-template #addHeader>
-      <h1 mat-dialog-title>Add Product</h1>
+      <h1 mat-dialog-title>Add Bill</h1>
     </ng-template>
   
     <div mat-dialog-content fxLayout="column" fxFlexFill fxLayoutGap="16px">
@@ -23,12 +20,12 @@
       <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
         <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
           <mat-label>Bill Amount</mat-label>
-          <input type="number" min="0" matInput [(ngModel)]="newProduct.billAmount" />
+          <input type="number" min="0" matInput [(ngModel)]="newBills.billAmount" />
         </mat-form-field>
   
         <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
           <mat-label>Delivery Date</mat-label>
-          <input type="number" min="0" matInput [(ngModel)]="newProduct.deliveryDate" />
+          <input type="number" min="0" matInput [(ngModel)]="newBills.deliveryDate" />
         </mat-form-field>
       </div>
     </div>
