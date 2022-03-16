@@ -8,7 +8,7 @@
   </ng-template>
 
   <div mat-dialog-content fxLayout="column" fxFlexFill fxLayoutGap="16px">
-    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
+    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="10px">
       <mat-form-field appearance="outline" fxFlex="20" fxFlex.xs="grow">
         <mat-label>Code</mat-label>
         <input type="number" min="0" matInput [(ngModel)]="newProduct.code" />
@@ -20,7 +20,39 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
+    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="10px">
+      <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
+        <mat-label>Company</mat-label>
+        <input matInput [(ngModel)]="newProduct.company" [matAutocomplete]="companyAuto" />
+        <mat-autocomplete #companyAuto="matAutocomplete">
+          <mat-option *ngFor="let company of companies" [value]="company">
+            {{ company }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
+        <mat-label>Category</mat-label>
+        <input matInput [(ngModel)]="newProduct.category" [matAutocomplete]="categoryAuto" />
+        <mat-autocomplete #categoryAuto="matAutocomplete">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="grow" fxFlex.xs="grow">
+        <mat-label>Sub Category</mat-label>
+        <input matInput [(ngModel)]="newProduct.subcategory" />
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="10px">
+      <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
+        <mat-label>MRP</mat-label>
+        <input type="number" min="0" matInput [(ngModel)]="newProduct.mrp" />
+      </mat-form-field>
+
       <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
         <mat-label>Price</mat-label>
         <input type="number" min="0" matInput [(ngModel)]="newProduct.price" />
@@ -29,6 +61,13 @@
       <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
         <mat-label>Quantity</mat-label>
         <input type="number" min="0" matInput [(ngModel)]="newProduct.qty" />
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="10px">
+      <mat-form-field appearance="outline" fxFlex="grow" fxFlex.xs="grow">
+        <mat-label>Description</mat-label>
+        <input type="textField" matInput [(ngModel)]="newProduct.description" />
       </mat-form-field>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, DocumentReference, Firestore, addDoc, updateDoc, doc, deleteDoc } from '@angular/fire/firestore';
+import { addDoc, CollectionReference, deleteDoc, doc, DocumentReference, Firestore, onSnapshot, query, updateDoc } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 
@@ -64,4 +64,26 @@ export class FirebaseCrudService {
   showSnackbar(message: string, action?: string): Observable<any> {
     return this._snackBar.open(message, action ? action : '').afterOpened();
   }
+
+  getUniqueValues(colRef: CollectionReference, field: string): Set<string> {
+    let values = new Set<string>();
+    onSnapshot(query(colRef), (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        values.add(doc.get(field));
+      });
+    });
+    return values;
+  }
+
+  // filterDocs() {
+  //   const db = getFirestore(firebaseApp);
+
+  //   const q = query(collection(db, 'cities'), where('capital', '==', true));
+
+  //   const querySnapshot = await getDocs(q);
+  //   querySnapshot.forEach((doc) => {
+  //     // doc.data() is never undefined for query doc snapshots
+  //     console.log(doc.id, ' => ', doc.data());
+  //   });
+  // }
 }

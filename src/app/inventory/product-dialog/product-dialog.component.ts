@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { addDoc, doc, DocumentReference, Firestore, updateDoc, CollectionReference } from '@angular/fire/firestore';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseCrudService } from 'src/app/services/firebase-crud.service';
@@ -12,20 +12,24 @@ import { Product } from '../Product';
 })
 export class ProductDialogComponent implements OnInit {
   newProduct!: Product;
-  productsColRef!: any;
+  colRef!: any;
+  companies: Set<string>;
+  categories: Set<string>;
   constructor(private store: Firestore, private crud: FirebaseCrudService, public dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar) {
     if (data.product) this.newProduct = data.product;
     else this.newProduct = {};
-    this.productsColRef = data.productsColRef;
+    this.colRef = data.productsColRef;
+    this.companies = crud.getUniqueValues(this.colRef, 'company');
+    this.categories = crud.getUniqueValues(this.colRef, 'category');
   }
 
   ngOnInit(): void {}
 
   add(): void {
-    if (this.crud.addDocument(this.productsColRef, this.newProduct)) this.dialogRef.close();
+    if (this.crud.addDocument(this.colRef, this.newProduct)) this.dialogRef.close();
   }
   update(): void {
-    if (this.crud.updateDocument(this.productsColRef, this.newProduct)) this.dialogRef.close();
+    if (this.crud.updateDocument(this.colRef, this.newProduct)) this.dialogRef.close();
   }
 
   cancel(): void {

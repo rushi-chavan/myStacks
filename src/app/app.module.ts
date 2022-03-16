@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 //importing Firebase modules
@@ -67,6 +68,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
+    MatAutocompleteModule,
     MatSnackBarModule,
 
     //other imports
