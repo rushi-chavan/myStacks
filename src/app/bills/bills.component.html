@@ -1,14 +1,76 @@
-<div class ="bills">
-    <mat-card>
-        <mat-card-title>Billing Section</mat-card-title>
-        <mat-card-actions>
-            <button mat-raised-button (click)="newBill()">Create New Bill</button>
-            <button mat-raised-button>Try</button>
-        </mat-card-actions>
+<div class="bills">
+  <mat-card>
+    <mat-card-title>Billing Section</mat-card-title>
+    <mat-card-actions>
+      <button mat-raised-button (click)="newBill()">Create New Bill</button>
+      <button mat-raised-button>Try</button>
+    </mat-card-actions>
 
+    <div *ngIf="(bills | async)?.length == 0; else billsTable">
+      <p>No bills found</p>
+    </div>
 
-    </mat-card>
+    <ng-template #billsTable>
+      <table mat-table [dataSource]="bills" [ngClass]="'mat-elevation-z8 w-100pt'">
+        <!-- Invoice number Column -->
+        <ng-container matColumnDef="invoiceNumber">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'w-75px'">Invoice No</th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'w-75px'">
+            {{ element.invoiceNumber }}
+          </td>
+        </ng-container>
 
-    
+        <!-- Client Name Column -->
+        <ng-container matColumnDef="billingpartyName">
+          <th mat-header-cell *matHeaderCellDef>Client Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.billingpartyName }}</td>
+        </ng-container>
 
+        <!-- Bill Amount Column -->
+        <ng-container matColumnDef="billAmount">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'w-100px'">Amount</th>
+          <td mat-cell *matCellDef="let element">{{ element.billAmount }}</td>
+        </ng-container>
+
+        <!-- Delivery Date Column -->
+        <ng-container matColumnDef="deliveryDate">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'w-100px'">Delivery Date</th>
+          <td mat-cell *matCellDef="let element">{{ element.deliveryDate }}</td>
+        </ng-container>
+
+        <!-- View Column -->
+        <ng-container matColumnDef="viewBill">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'w-50px'"></th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'w-50px'">
+            <button mat-icon-button (click)="viewBill(element)">
+              <mat-icon aria-hidden="false" aria-label="visibility icon"> visibility </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Print Column -->
+        <ng-container matColumnDef="printBill">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'w-50px'"></th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'w-50px'">
+            <button mat-icon-button (click)="printBill(element)">
+              <mat-icon aria-hidden="false" aria-label="print icon"> print </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Delete Column -->
+        <ng-container matColumnDef="deleteBill">
+          <th mat-header-cell *matHeaderCellDef [ngClass]="'w-50px'"></th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'w-50px'">
+            <button mat-icon-button (click)="deleteBill(element)">
+              <mat-icon aria-hidden="false" aria-label="delete icon"> delete </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="billsColumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: billsColumn"></tr>
+      </table>
+    </ng-template>
+  </mat-card>
 </div>

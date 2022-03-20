@@ -5,37 +5,41 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductDialogComponent } from '../inventory/product-dialog/product-dialog.component';
 import { Bills } from './Bills';
-
+import { FirebaseCrudService } from '../services/firebase-crud.service';
 
 @Component({
   selector: 'app-bills',
   templateUrl: './bills.component.html',
-  styleUrls: ['./bills.component.css']
+  styleUrls: ['./bills.component.css'],
 })
 export class BillsComponent implements OnInit {
   inventoryID: string;
   bills: Observable<Bills[]>;
   billsColumn: String[];
-  productsColRef: any;
-  
-  
-  constructor(private store: Firestore, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+  billsColRef: any;
+
+  constructor(private store: Firestore, private crud: FirebaseCrudService, public dialog: MatDialog) {
     this.inventoryID = 'IIg2g4EKZKVszwPJrGx1';
-    this.productsColRef = collection(store, 'inventories', this.inventoryID, 'bills');
+    this.billsColRef = collection(store, 'inventories', this.inventoryID, 'bills');
 
-    this.bills = collectionData(this.productsColRef, { idField: 'docID' });
-    this.billsColumn = ['invoiceNumber', 'billingpartyName', 'billAmount', 'deliveryDate', 'printBill', 'deleteBill'];
+    this.bills = collectionData(this.billsColRef, { idField: 'docID' });
+    this.billsColumn = ['invoiceNumber', 'billingpartyName', 'billAmount', 'deliveryDate', 'viewBill', 'printBill', 'deleteBill'];
   }
-
 
   newBill(): void {
     const dialogRef = this.dialog.open(ProductDialogComponent, {
       width: '50vw',
-      data: { productsColRef: this.productsColRef },
+      data: { billsColRef: this.billsColRef },
     });
   }
 
-  ngOnInit(): void {
+  viewBill(bill: Bills): void {}
+
+  printBill(bill: Bills): void {}
+
+  deleteBill(bill: Bills): void {
+    this.crud.deleteDocument(this.billsColRef, bill);
   }
 
+  ngOnInit(): void {}
 }
