@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { addDoc, doc, DocumentReference, Firestore, updateDoc, CollectionReference } from '@angular/fire/firestore';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FirebaseCrudService } from 'src/app/services/firebase-crud.service';
 import { Bills } from '../Bills';
 
 @Component({
@@ -10,39 +10,22 @@ import { Bills } from '../Bills';
   styleUrls: ['./bills-dialog.component.css'],
 })
 export class BillsDialogComponent implements OnInit {
-  newBills!: Bills;
+  newBill!: Bills;
   billsColRef!: any;
-  constructor(private store: Firestore, public dialogRef: MatDialogRef<BillsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar) {
-    if (data.bill) this.newBills = data.bill;
-    else this.newBills = {};
-    this.billsColRef = data.billssColRef;
+  constructor(private store: Firestore, private crud: FirebaseCrudService, public dialogRef: MatDialogRef<BillsDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    if (data.bill) this.newBill = data.bill;
+    else this.newBill = {};
+    this.billsColRef = data.billsColRef;
+    console.log(this.newBill.deliveryDate);
   }
 
   ngOnInit(): void {}
 
   add(): void {
-    addDoc(this.billsColRef, this.newBills)
-      .then(() => {
-        this._snackBar
-          .open('Bill added')
-          .afterOpened()
-          .subscribe(() => {
-            this.dialogRef.close();
-          });
-      })
-      .catch((e) => {
-        this._snackBar.open('Error: Cannot add bill');
-        console.log(e.message);
-      });
+    this.crud.addDocument(this.billsColRef, this.newBill);
   }
-
-  
 
   cancel(): void {
     this.dialogRef.close();
-  }
-
-  docRef(product: Bills): DocumentReference<Bills> {
-    return doc(this.store, this.billsColRef.path, `${product.docID}`);
   }
 }

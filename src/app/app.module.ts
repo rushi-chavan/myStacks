@@ -27,6 +27,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule, MAT_AUTOCOMPLETE_DEFAULT_OPTIONS } from '@angular/material/autocomplete';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
@@ -70,6 +72,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatSortModule,
     MatAutocompleteModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
 
     //other imports
     FormsModule,

@@ -1,40 +1,44 @@
-<!-- ADD Bill -->
 <div>
-    <ng-template #addHeader>
-      <h1 mat-dialog-title>Add Bill</h1>
-    </ng-template>
-  
-    <div mat-dialog-content fxLayout="column" fxFlexFill fxLayoutGap="16px">
-      <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
-        <mat-form-field appearance="outline" fxFlex="20" fxFlex.xs="grow">
-          <mat-label>Invoice Number</mat-label>
-          <input type="number" min="0" matInput [(ngModel)]="newBills.invoiceNumber" />
-        </mat-form-field>
-  
-        <mat-form-field appearance="outline" fxFlex="grow" fxFlex.xs="grow">
-          <mat-label>Billing Party Name</mat-label>
-          <input matInput [(ngModel)]="newBills.billingpartyName" />
-        </mat-form-field>
-      </div>
-  
-      <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
-        <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
-          <mat-label>Bill Amount</mat-label>
-          <input type="number" min="0" matInput [(ngModel)]="newBills.billAmount" />
-        </mat-form-field>
-  
-        <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
-          <mat-label>Delivery Date</mat-label>
-          <input type="number" min="0" matInput [(ngModel)]="newBills.deliveryDate" />
-        </mat-form-field>
-      </div>
+  <ng-template [ngIf]="data.bill" [ngIfElse]="addHeader">
+    <h1 mat-dialog-title>View Bill</h1>
+  </ng-template>
+  <ng-template #addHeader>
+    <h1 mat-dialog-title>Add Bill</h1>
+  </ng-template>
+
+  <div mat-dialog-content fxLayout="column" fxFlexFill fxLayoutGap="16px">
+    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
+      <mat-form-field appearance="outline" fxFlex="20" fxFlex.xs="grow">
+        <mat-label>Invoice Number</mat-label>
+        <input type="number" min="0" matInput [(ngModel)]="newBill.invoiceNumber" [disabled]="data.bill" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="grow" fxFlex.xs="grow">
+        <mat-label>Billing Party Name</mat-label>
+        <input matInput [(ngModel)]="newBill.billingpartyName" [disabled]="data.bill" />
+      </mat-form-field>
     </div>
-  
-    <div mat-dialog-actions>
-      <ng-template #addButton>
-        <button mat-raised-button (click)="add()">Add</button>
-      </ng-template>
-      <button mat-raised-button (click)="cancel()">Cancel</button>
+
+    <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="16px">
+      <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
+        <mat-label>Bill Amount</mat-label>
+        <input type="number" min="0" matInput [(ngModel)]="newBill.billAmount" [disabled]="data.bill" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
+        <mat-label>Delivery Date</mat-label>
+        <input matInput *ngIf="data.bill" value="{{ newBill.deliveryDate!.toDate().toDateString().match('[A-Za-z]* [0-9]* [0-9]*') }}" [disabled]="data.bill" />
+        <input matInput *ngIf="!data.bill" [(ngModel)]="newBill.deliveryDate" [matDatepicker]="picker" />
+        <mat-datepicker-toggle *ngIf="!data.bill" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
   </div>
-  
+
+  <div mat-dialog-actions>
+    <ng-template [ngIf]="!data.bill">
+      <button mat-raised-button (click)="add()">Add</button>
+    </ng-template>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
+  </div>
+</div>
