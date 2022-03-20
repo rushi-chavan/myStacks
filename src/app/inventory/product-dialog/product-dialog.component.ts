@@ -15,12 +15,18 @@ export class ProductDialogComponent implements OnInit {
   colRef!: any;
   companies: Set<string>;
   categories: Set<string>;
+  companyDropdown: string[];
+  categoryDropdown: string[];
+
   constructor(private store: Firestore, private crud: FirebaseCrudService, public dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private _snackBar: MatSnackBar) {
     if (data.product) this.newProduct = data.product;
     else this.newProduct = {};
     this.colRef = data.productsColRef;
-    this.companies = crud.getUniqueValues(this.colRef, 'company');
-    this.categories = crud.getUniqueValues(this.colRef, 'category');
+    let dropdownValues = crud.getUniqueValues(this.colRef, ['company', 'category']);
+    this.companies = dropdownValues.get('company')!;
+    this.categories = dropdownValues.get('category')!;
+    this.companyDropdown = Array.from(this.companies);
+    this.categoryDropdown = Array.from(this.categories);
   }
 
   ngOnInit(): void {}
@@ -34,5 +40,19 @@ export class ProductDialogComponent implements OnInit {
 
   cancel(): void {
     this.dialogRef.close();
+  }
+
+  doFilter(field: string): void {
+    switch (field) {
+      case 'company':
+        this.companyDropdown = Array.from(this.companies).filter((v) => v.toLowerCase().includes(this.newProduct.company!.toLowerCase()));
+        break;
+      case 'category':
+        this.categoryDropdown = Array.from(this.categories).filter((v) => v.toLowerCase().includes(this.newProduct.category!.toLowerCase()));
+        break;
+      default:
+        console.log('Invalid field to filter');
+        break;
+    }
   }
 }

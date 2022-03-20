@@ -8,6 +8,7 @@
     <div *ngIf="(products | async)?.length == 0; else productsTable">
       <p>No Records found</p>
     </div>
+
     <ng-template #productsTable>
       <table mat-table [dataSource]="products" [ngClass]="'mat-elevation-z8 w-100pt'">
         <!-- Code Column -->
@@ -22,6 +23,18 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="company">
+          <th mat-header-cell *matHeaderCellDef>Company</th>
+          <td mat-cell *matCellDef="let element">{{ element.company }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let element">{{ element.category }}</td>
         </ng-container>
 
         <!-- Price Column -->

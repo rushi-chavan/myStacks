@@ -23,9 +23,9 @@
     <div fxFlex="grow" fxLayout="row" fxFlexFill fxLayoutGap="10px">
       <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
         <mat-label>Company</mat-label>
-        <input matInput [(ngModel)]="newProduct.company" [matAutocomplete]="companyAuto" />
+        <input matInput [(ngModel)]="newProduct.company" [matAutocomplete]="companyAuto" (ngModelChange)="doFilter('company')" />
         <mat-autocomplete #companyAuto="matAutocomplete">
-          <mat-option *ngFor="let company of companies" [value]="company">
+          <mat-option *ngFor="let company of companyDropdown" [value]="company">
             {{ company }}
           </mat-option>
         </mat-autocomplete>
@@ -33,9 +33,9 @@
 
       <mat-form-field appearance="outline" fxFlex="33" fxFlex.xs="grow">
         <mat-label>Category</mat-label>
-        <input matInput [(ngModel)]="newProduct.category" [matAutocomplete]="categoryAuto" />
+        <input matInput [(ngModel)]="newProduct.category" [matAutocomplete]="categoryAuto" (ngModelChange)="doFilter('category')" />
         <mat-autocomplete #categoryAuto="matAutocomplete">
-          <mat-option *ngFor="let category of categories" [value]="category">
+          <mat-option *ngFor="let category of categoryDropdown" [value]="category">
             {{ category }}
           </mat-option>
         </mat-autocomplete>

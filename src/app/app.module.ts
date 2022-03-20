@@ -27,7 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MAT_AUTOCOMPLETE_DEFAULT_OPTIONS } from '@angular/material/autocomplete';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 //importing Firebase modules
@@ -36,7 +36,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, enableIndexedDbPersistence } from '@angular/fire/firestore';
 
 //other imports
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -73,6 +73,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
     //other imports
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
 
     //declaring Firebase modules
@@ -91,7 +92,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [{ provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000, panelClass: ['center'], verticalPosition: 'top', horizontalPosition: 'right' } }],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000, panelClass: ['center'], verticalPosition: 'top', horizontalPosition: 'right' } },
+    { provide: MAT_AUTOCOMPLETE_DEFAULT_OPTIONS, useValue: { autoActiveFirstOption: true } },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ProductDialogComponent],
 })

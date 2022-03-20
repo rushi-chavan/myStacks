@@ -65,11 +65,16 @@ export class FirebaseCrudService {
     return this._snackBar.open(message, action ? action : '').afterOpened();
   }
 
-  getUniqueValues(colRef: CollectionReference, field: string): Set<string> {
-    let values = new Set<string>();
+  getUniqueValues(colRef: CollectionReference, fields: string[]): Map<string, Set<string>> {
+    let values = new Map<string, Set<string>>();
+    fields.forEach((field) => {
+      values.set(field, new Set<string>());
+    });
     onSnapshot(query(colRef), (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        values.add(doc.get(field));
+        fields.forEach((field) => {
+          values.get(field)?.add(doc.get(field));
+        });
       });
     });
     return values;
